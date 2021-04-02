@@ -1,3 +1,4 @@
 .env
 monscript/.env
 venv/bin/activate
+Xterm.log.*

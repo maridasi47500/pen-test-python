@@ -1,5 +1,0 @@
-entrez le mot de passe et entrez rails s
-[33mWarning: the running version of Bundler (2.1.2) is older than the version that created the lockfile (2.2.25). We suggest you to upgrade to the version that created the lockfile by running `gem install bundler:2.2.25`.
-[0m[33mThe dependency tzinfo-data (>= 0) will be unused by any of the platforms Bundler is installing for. Bundler is installing for ruby, x86-linux but the dependency is only for x86-mingw32, x86-mswin32, x64-mingw32, java. To add those platforms to the bundle, run `bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java`.[0m
-[33mWarning: the running version of Bundler (2.1.2) is older than the version that created the lockfile (2.2.25). We suggest you to upgrade to the version that created the lockfile by running `gem install bundler:2.2.25`.
-[0m[33m[31mYour Ruby version is 2.7.0, but your Gemfile specified 2.7.1[0m[0m
