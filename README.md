@@ -11,7 +11,7 @@ export MESAIRPODS=""
 
 - $ lance 
 ```
-sh ./aideinformatique.sh
+sh ./celluleinformatique.sh
 ```
 
 - $ pour rechercher sur ogogle lance
