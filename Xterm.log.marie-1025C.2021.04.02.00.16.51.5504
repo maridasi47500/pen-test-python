@@ -1,0 +1,4 @@
+entrez le mot de passe et entrez rails s
+arrivee à la fin de bash profile 
+[33mWarning: the running version of Bundler (2.1.4) is older than the version that created the lockfile (2.2.25). We suggest you to upgrade to the version that created the lockfile by running `gem install bundler:2.2.25`.
+[0m
