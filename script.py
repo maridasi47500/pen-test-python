@@ -7,6 +7,9 @@ Very simple HTTP server in python for logging requests
 Usage::
     ./server.py [<port>]
 """
+import urllib
+from urllib.parse import urlparse, parse_qs
+
 from hello import Hello
 from erreur import Erreur
 from route import Route
@@ -22,14 +25,32 @@ class S(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        logging.info("GET request,\nPath: %s\nHeaders:\n%s\n", str(self.path), str(self.headers))
-        self._set_response()
+        parsed_path = urllib.parse.urlparse(self.path)
+        params=parse_qs(parsed_path.query) | {}
+        if parsed_path.path.startswith("/echo"):
+           message = '\n'.join([  'CLIENT VALUES:',
+           'client_address=%s (%s)' % (self.client_address, self.address_string()),
+           'command=%s' % self.command,
+           'path=%s' % self.path,
+           'real path=%s' % parsed_path.path,
+           'query=%s' % parsed_path.query,
+           'request_version=%s' % self.request_version,
+           '',
+           'HEADERS:',
+           '%s' % self.headers,])
+           self.send_response(200)
+           self.end_headers()
+           self.wfile.write(message.encode('utf-8'))
+        else:
+           logging.info("GET request,\nPath: %s\nHeaders:\n%s\n", str(self.path), str(self.headers))
+           self._set_response()
 
-        #mytext="<nav><a href=\"hack\">hacks de python</a><a href=\"bibliohteque\">bibliotheue de python</a></nav><main><h1>hi</h1><p>vous êtes sur la page{}</p><p></p></main>".format(self.path)
-        mytext=Route().get_route(self.path)
+            #mytext="<nav><a href=\"hack\">hacks de python</a><a href=\"bibliohteque\">bibliotheue de python</a></nav><main><h1>hi</h1><p>vous êtes sur la page{}</p><p></p></main>".format(self.path)
+           print(params)
+           print("myparams")
+           mytext=Route().get_route(myroute=self.path.split("?")[0],myparams=params)
 
-
-        self.wfile.write(mytext)
+           self.wfile.write(mytext)
 
     def do_POST(self):
         content_length = int(self.headers['Content-Length']) # <--- Gets the size of data

@@ -10,7 +10,7 @@ class Hello():
   def hi(self,myscrit):
     self.figure.set_content(Fichier("./welcome","index.html").lire())
     return self.figure.render_figure()
-  def work(self):
+  def work(self,params):
     FUNCS={"hi":self.hi,"bluetooth":self.bluetooth, "variable":self.variable, "airpods": self.airpods}
     MYPROGRAM={"hi": [],"bluetooth":['sh',"./monscript/mesairpods.sh"], "variable":['sh',"./monscript/variables.sh"], "airpods": ['python3',"./monscript/bluetooth.py"]}
     print(self.path)
