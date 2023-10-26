@@ -1,10 +1,10 @@
 import re
 from render import Render
 from fichier import Fichier
-from google import Google as google
+from bing import Bing as bing
 import subprocess
 import urllib
-class Google():
+class Bing():
   def __init__(self,path):
     self.path=path
     self.title="aide informatique"
@@ -13,9 +13,12 @@ class Google():
   def search(self,params):
     self.figure.set_content(Fichier("./welcome","index.html").lire())
     num_page=1
-    print(params["search"][0])
+    #print(params["search"][0])
     print("my search")
-    search_results = google.search(params["search"][0], num_page)
+    try:
+      search_results = bing.search(params["search"][0], num_page)
+    except:
+      search_results=[]
     print(len(search_results))
     print("result")
     

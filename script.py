@@ -26,7 +26,7 @@ class S(BaseHTTPRequestHandler):
 
     def do_GET(self):
         parsed_path = urllib.parse.urlparse(self.path)
-        params=parse_qs(parsed_path.query) | {}
+        params=parse_qs(parsed_path.query)
         if parsed_path.path.startswith("/echo"):
            message = '\n'.join([  'CLIENT VALUES:',
            'client_address=%s (%s)' % (self.client_address, self.address_string()),
@@ -45,7 +45,7 @@ class S(BaseHTTPRequestHandler):
            logging.info("GET request,\nPath: %s\nHeaders:\n%s\n", str(self.path), str(self.headers))
            self._set_response()
 
-            #mytext="<nav><a href=\"hack\">hacks de python</a><a href=\"bibliohteque\">bibliotheue de python</a></nav><main><h1>hi</h1><p>vous êtes sur la page{}</p><p></p></main>".format(self.path)
+           
            print(params)
            print("myparams")
            mytext=Route().get_route(myroute=self.path.split("?")[0],myparams=params)

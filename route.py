@@ -2,18 +2,21 @@ import re
 from hello import Hello
 from erreur import Erreur
 from render import Render
-from mygoogle import Google
+from mybing import Bing
+from traduction import Traduction
 
 
 class Route():
   def __init__(self):
     self.params={}
     self.route={
-"/$":"Hello#hi",
-"/bluetooth$":"Hello#bluetooth",
-"/variables$":"Hello#variable",
-"/airpods$":"Hello#airpods",
-"/google$":"Google#search",
+r"/$":"Hello#hi",
+r"/bienvenue$":"Hello#hi",
+r"/bluetooth$":"Hello#bluetooth",
+r"/variables$":"Hello#variable",
+r"/airpods$":"Hello#airpods",
+r"/bing$":"Bing#search",
+r"/traduire$":"Traduction#traduire",
 
 }
   def get_route(self,myroute,myparams):
@@ -23,6 +26,7 @@ class Route():
     for i in self.route:
       j=self.route[i]
       if re.match(myroute, i):
+        print(j, "my func found")
         loc = {}
         print("myvar="+j.split("#")[0]+"('"+j.split("#")[1]+"').work(params=params).encode()".format(params=myparams))
         exec("myvar="+j.split("#")[0]+"('"+j.split("#")[1]+"').work(params={params}).encode()".format(params=myparams),globals(),loc)

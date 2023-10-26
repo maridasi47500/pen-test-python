@@ -4,14 +4,8 @@ from urllib.parse import urlencode, urlunparse
 import time
 
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
 
 from pprint import pprint
 import os
@@ -19,7 +13,7 @@ import threading
 import http.client as httplib
 import urllib
 import requests
-from fake_useragent import UserAgent
+#from fake_useragent import UserAgent
 
 from urllib.request import urlopen, Request
 
@@ -36,7 +30,7 @@ __version__ = "0.9"
 """
 Represents a standard google search result
 """
-class GoogleResult:
+class BingResult:
     def __init__(self):
         self.name = None
         self.link = None
@@ -123,11 +117,11 @@ class ImageOptions:
 """
 Defines the public static api methods
 """
-class Google:
+class Bing:
     DEBUG_MODE = False
 
     """
-    Returns a list of GoogleResult
+    Returns a list of BingResult
     """
     @staticmethod
     def search(query, pages = 1):
@@ -136,13 +130,13 @@ class Google:
             url = get_search_url(query, i)
             html = get_html(url)
             if html:
-                if Google.DEBUG_MODE:
+                if Bing.DEBUG_MODE:
                     write_html_to_file(html, "{0}_{1}.html".format(query.replace(" ", "_"), i))
                 soup = BeautifulSoup(html, features="html.parser")
                 lis = soup.findAll("li", attrs = { "class" : "b_algo" })
                 j = 0
                 for li in lis:
-                    res = GoogleResult()
+                    res = BingResult()
                     res.page = i
                     res.index = j
                     a = li.find("a")
@@ -184,7 +178,7 @@ class Google:
             url = get_image_search_url(query, image_options, i)
             html = get_html(url)
             if html:
-                if Google.DEBUG_MODE:
+                if Bing.DEBUG_MODE:
                     write_html_to_file(html, "images_{0}_{1}.html".format(query.replace(" ", "_"), i))
                 j = 0
                 soup = BeautifulSoup(html)
@@ -226,7 +220,7 @@ class Google:
             url = get_image_search_url(query, image_options, i)
             html = get_html(url)
             if html:
-                if Google.DEBUG_MODE:
+                if Bing.DEBUG_MODE:
                     write_html_to_file(html, "images_{0}_{1}.html".format(query.replace(" ", "_"), i))
                 soup = BeautifulSoup(html)
                 j = 0
@@ -267,7 +261,7 @@ class Google:
             url = get_shopping_url(query, i)
             html = get_html(url)
             if html:
-                if Google.DEBUG_MODE:
+                if Bing.DEBUG_MODE:
                     write_html_to_file(html, "shopping_{0}_{1}.html".format(query.replace(" ", "_"), i))
                 j = 0
                 soup = BeautifulSoup(html)
@@ -334,7 +328,7 @@ class Google:
     """
     @staticmethod
     def exchange_rate(from_currency, to_currency):
-        return Google.convert_currency(1, from_currency, to_currency)
+        return Bing.convert_currency(1, from_currency, to_currency)
  
     """
     Attempts to use google calculator to calculate the result of expr
@@ -452,9 +446,9 @@ def is_number(s):
     
 def get_html(url):
     try:
-        ua = UserAgent()
+        #ua = UserAgent()
         myheaders={b"User-Agent": b"Mozilla/5.001 (windows; U; NT4.0; en-US; rv:1.0) Gecko/25250101"}
-        myheaders = {b'User-Agent': ua.chrome}
+        #myheaders = {b'User-Agent': ua.chrome}
 
         r = Request(url,headers=myheaders)
         #r=requests.get(url,headers=myheaders)
@@ -473,13 +467,13 @@ def write_html_to_file(html, filename):
     of.close()
         
 def test():
-    search = Google.search("github")
+    search = Bing.search("github")
     if search is None or len(search) == 0: 
         print("ERROR: No Search Results!")
     else: 
         print("PASSED: {0} Search Results".format(len(search)))
     
-    shop = Google.shopping("Disgaea 4")
+    shop = Bing.shopping("Disgaea 4")
     if shop is None or len(shop) == 0: 
         print("ERROR: No Shopping Results!")
     else: 
@@ -489,19 +483,19 @@ def test():
     options.image_type = ImageType.CLIPART
     options.larger_than = LargerThan.MP_4
     options.color = "green"
-    images = Google.search_images("banana", options)
+    images = Bing.search_images("banana", options)
     if images is None or len(images) == 0: 
         print("ERROR: No Image Results!")
     else:
         print("PASSED: {0} Image Results".format(len(images)))
         
-    calc = Google.calculate("157.3kg in grams")
+    calc = Bing.calculate("157.3kg in grams")
     if calc is not None and int(calc.value) == 157300:
         print("PASSED: Calculator passed")
     else:
         print("ERROR: Calculator failed!")
         
-    euros = Google.convert_currency(5.0, "USD", "EUR")
+    euros = Bing.convert_currency(5.0, "USD", "EUR")
     if euros is not None and euros > 0.0:
         print("PASSED: Currency convert passed")
     else:
@@ -509,7 +503,7 @@ def test():
         
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "--debug":
-        Google.DEBUG_MODE = True
+        Bing.DEBUG_MODE = True
         print("DEBUG_MODE ENABLED")
     test()
         

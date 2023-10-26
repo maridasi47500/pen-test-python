@@ -4,9 +4,13 @@ class Render():
   def __init__(self,title):
     self.title=title
     self.body=title
+    self.template="./template/index.html"
     self.headingone=title
     self.collection={}
+    self.my_params={}
     self.collection_string=""
+  def set_my_params(self,name,param):
+    self.my_params[name]=param
   def set_collection(self,name,collection):
     self.collection[name]=collection
   def render_collection(self,path,view,mycollection,erreur):
@@ -19,7 +23,10 @@ class Render():
         for x in myview.split("<%="):
            y=x.split("%>")
            myexpr=y[0]
-           mystr=y[1]
+           try:
+             mystr=y[1]
+           except:
+             mystr=""
            try:
              
              string+=eval(myexpr)
@@ -44,7 +51,6 @@ class Render():
        if myinclude:
          try:
            print(myexpr, "monexpression")
-           print(self.collection['mycollection'])
            loc={"self": self}
            exec("myres="+myexpr,globals(),loc)
            string+=loc["myres"]
@@ -52,6 +58,7 @@ class Render():
            print(e,"m error")
            string+=""
          string+=mystr
+         myinclude=False
        else:
          string+=myexpr
     self.body=string
@@ -67,16 +74,5 @@ class Render():
     self.body += mot
   def render_figure(self):
     self.render_body()
-    return """<html>
-
-<head>
-<title>{debutdemesmots}</title>
-</head>
-<body>
-<nav><div>à la racine tu as un fichir ./venv/bin/activate avec ecrit dedans 'export MESAIRPODS="mac adresse de mes airpods"'(1) </div><a href="/bluetooth">je n'arrive pas à connecer mes appareils blueooth (reinitaliser bluetooth ) (2)</a>
-<a href="/airpods">mes airpods sont pas connectes (3)</a>
-<a href="/">welcome</a></nav>
-<h1>{mots}</h1>
-{partiedemesmot}
-</body>
-</html>""".format(mots=self.get_headingone(),debutdemesmots=self.get_title(),partiedemesmot=self.get_body())
+    template=open(self.template,"r").read()
+    return template.format(mots=self.get_headingone(),debutdemesmots=self.get_title(),partiedemesmot=self.get_body())

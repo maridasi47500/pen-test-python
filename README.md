@@ -18,5 +18,7 @@ sh ./aideinformatique.sh
 ```
 pip install git+https://github.com/abenassi/Google-Search-API
 ```
-
-# pen-test-python
+- $ ce qui a marché pour moi
+```
+rm ~/.local/lib/python3.5/ -rf
+```
