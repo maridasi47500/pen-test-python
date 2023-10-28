@@ -13,6 +13,8 @@ class Route():
 r"/$":"Hello#hi",
 r"/bienvenue$":"Hello#hi",
 r"/bluetooth$":"Hello#bluetooth",
+r"/hautparleur$":"Hello#hautparleur",
+r"/monhautparleurjack$":"Hello#hautparleurjack",
 r"/variables$":"Hello#variable",
 r"/airpods$":"Hello#airpods",
 r"/bing$":"Bing#search",
