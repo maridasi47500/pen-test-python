@@ -46,6 +46,10 @@ class Hello():
   def hautparleurjack(self,myscript):
     try:
       x = subprocess.check_output(myscript)
+      print(x, type(x).__name__,"myu haut aprleyr")
+      
+      if type(x) is bytes:
+          x="ok le haut parleur a été branché en jack"
     except Exception as e:
       x = "il y a eu une erreur"+str(e)
     self.figure.set_content(x)

@@ -69,7 +69,10 @@ class Render():
   def get_body(self):
     return self.body
   def set_content(self,mybody):
-    self.body+=mybody
+    if len(mybody) > 0:
+      self.body+=mybody
+    else:
+      self.body+=''
   def ajouter_a_mes_mots(self,mot):
     self.body += mot
   def render_figure(self):
