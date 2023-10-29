@@ -4,6 +4,9 @@ from erreur import Erreur
 from render import Render
 from mybing import Bing
 from traduction import Traduction
+from mypic import Pic
+from music import Music
+from javascript import Js
 
 
 class Route():
@@ -18,6 +21,9 @@ r"/monhautparleurjack$":"Hello#hautparleurjack",
 r"/variables$":"Hello#variable",
 r"/airpods$":"Hello#airpods",
 r"/bing$":"Bing#search",
+r"/recording$":"Music#recording",
+r"/traduit$":"Traduction#traduit",
+r"/music$":"Music#music",
 r"/traduire$":"Traduction#traduire",
 
 }
@@ -25,15 +31,22 @@ r"/traduire$":"Traduction#traduire",
     print(myroute,myparams)
     print("myroute")
     self.params=myparams
-    for i in self.route:
-      j=self.route[i]
-      if re.match(myroute, i):
-        print(j, "my func found")
-        loc = {}
-        print("myvar="+j.split("#")[0]+"('"+j.split("#")[1]+"').work(params=params).encode()".format(params=myparams))
-        exec("myvar="+j.split("#")[0]+"('"+j.split("#")[1]+"').work(params={params}).encode()".format(params=myparams),globals(),loc)
-        print(loc["myvar"])
-        print("loc")
-        return loc["myvar"]
-    mytext=(Erreur().err404().encode())
-    return mytext
+    if myroute.endswith("ico"):
+        myProgram=Pic(myroute)
+        return myProgram
+    elif myroute.endswith(".js"):
+        myProgram=Js(name=myroute)
+        return myProgram
+    else:
+        for i in self.route:
+          j=self.route[i]
+          if re.match(myroute, i):
+            print(j, "my func found")
+            loc = {}
+            print("myvar="+j.split("#")[0]+"('"+j.split("#")[1]+"').work(params=params).encode()".format(params=myparams))
+            exec("myvar="+j.split("#")[0]+"('"+j.split("#")[1]+"').work(params={params})".format(params=myparams),globals(),loc)
+            print(loc["myvar"])
+            print("loc")
+            return loc["myvar"]
+        mytext=(Erreur().err404())
+        return mytext

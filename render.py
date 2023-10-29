@@ -40,6 +40,7 @@ class Render():
     string=""
     myinclude=False
     for x in self.body.split("<%="):
+       print(x)
        y=x.split("%>")
        myexpr=y[0]
        try:
@@ -70,7 +71,11 @@ class Render():
     return self.body
   def set_content(self,mybody):
     if len(mybody) > 0:
-      self.body+=mybody
+      if type(mybody) is bytes:
+        print(mybody)
+        self.body+=str(mybody)
+      else:
+        self.body+=mybody
     else:
       self.body+=''
   def ajouter_a_mes_mots(self,mot):

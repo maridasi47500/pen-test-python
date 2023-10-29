@@ -4,7 +4,8 @@ from fichier import Fichier
 from bing import Bing as bing
 import subprocess
 import urllib
-class Bing():
+from myfunc import Myfunc
+class Bing(Myfunc):
   def __init__(self,path):
     self.path=path
     self.title="aide informatique"
@@ -25,14 +26,14 @@ class Bing():
     self.figure.set_collection("mycollection",search_results)
 
     self.figure.ajouter_a_mes_mots(Fichier("./welcome","search.html").lire())
-    return self.figure.render_figure()
-  def work(self,params):
-      FUNCS={"search":self.search}
-      print(self.path)
-      for x in FUNCS:
-        print(x)
+    return self
+  #def work(self,params):
+  #    FUNCS={"search":self.search}
+  #    print(self.path)
+  #    for x in FUNCS:
+  #      print(x)
 
-        if x == self.path:
-          y=FUNCS[x]
-          print(y)
-          return y(params)
+  #      if x == self.path:
+  #        y=FUNCS[x]
+  #        print(y)
+  #        return y(params)

@@ -1,0 +1,14 @@
+   traduire 1 text de l'anglais en : 
+<form method="get" action="/traduire">
+<select name="lang">
+<option value="de">allemand</option>
+<option value="fr">francais</option>
+<option value="ru">russ</option>
+<option value="zh">chinois</option>
+<option value="it">italien</option>
+<option value="es">espagnol</option>
+</select>
+        <textarea name="text"><%=self.my_params["maphrase"]%></textarea>
+        <input type="submit" value="chercher" name="submit"/>
+</form>
+

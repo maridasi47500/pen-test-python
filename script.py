@@ -16,12 +16,53 @@ from route import Route
 from render import Render
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import logging
+
+#files
+import os
+import posixpath
+import cgi
+import shutil
+import mimetypes
+import re
+import sys
+#try:
+#    from cStringIO import StringIO
+#except ImportError:
+#    from StringIO import StringIO
 ROUTE={"/":"hello#hi"}
 
 class S(BaseHTTPRequestHandler):
-    def _set_response(self):
+    def deal_post_data(self,myattribute=False):
+        if myattribute:
+          ctype, pdict = cgi.parse_header(self.headers['Content-Type'])
+          print(pdict)
+          pdict['boundary'] = bytes(pdict['boundary'], "utf-8")
+          pdict['CONTENT-LENGTH'] = int(self.headers['Content-Length'])
+          if ctype == 'multipart/form-data':
+              form = cgi.FieldStorage( fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD':'POST', 'CONTENT_TYPE':self.headers['Content-Type'], })
+              print (type(form))
+              try:
+                  if isinstance(form["file"], list):
+                      for record in form["file"]:
+                          open("./%s"%record.filename, "wb").write(record.file.read())
+                  else:
+                      open("./%s"%form["file"].filename, "wb").write(form["file"].file.read())
+              except IOError:
+                      return (False, "Can't create file to write, do you have permission to write?")
+          return (True, "Files uploaded")
+
+    def _set_response(self,pic=False,js=False):
+
         self.send_response(200)
-        self.send_header('Content-type', 'text/html')
+        if pic:
+          self.send_header('Content-type', 'image/'+pic)
+        elif js:
+          self.send_header('Content-type', 'text/javascript')
+
+        else:
+
+          self.send_header('Content-type', 'text/html')
+
         self.end_headers()
 
     def do_GET(self):
@@ -43,23 +84,58 @@ class S(BaseHTTPRequestHandler):
            self.wfile.write(message.encode('utf-8'))
         else:
            logging.info("GET request,\nPath: %s\nHeaders:\n%s\n", str(self.path), str(self.headers))
-           self._set_response()
+
 
            
            print(params)
            print("myparams")
-           mytext=Route().get_route(myroute=self.path.split("?")[0],myparams=params)
+           myProgram=Route().get_route(myroute=self.path.split("?")[0],myparams=params)
 
-           self.wfile.write(mytext)
+           self._set_response(pic=myProgram.get_pic(), js=myProgram.get_js())
+           
+           print(myProgram, "y mrograù")
+           html=myProgram.get_html()
+           #print(html)
+           self.wfile.write(bytes(html))
 
     def do_POST(self):
-        content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
-        post_data = self.rfile.read(content_length) # <--- Gets the data itself
-        logging.info("POST request,\nPath: %s\nHeaders:\n%s\n\nBody:\n%s\n",
-                str(self.path), str(self.headers), post_data.decode('utf-8'))
 
-        self._set_response()
-        self.wfile.write("POST request for {}".format(self.path).encode('utf-8'))
+        parsed_path = urllib.parse.urlparse(self.path)
+        #params=parse_qs(parsed_path.query)
+        if self.path.startswith("/echo"):
+          message = '\n'.join([  'CLIENT VALUES:',
+          'client_address=%s (%s)' % (self.client_address, self.address_string()),
+          'command=%s' % self.command,
+          'path=%s' % self.path,
+          'real path=%s' % parsed_path.path,
+          'query=%s' % parsed_path.query,
+          'request_version=%s' % self.request_version,
+          '',
+          'HEADERS:',
+          '%s' % self.headers,])
+          print(message)
+          self.send_response(200)
+          self.end_headers()
+          self.wfile.write(message.encode('utf-8'))
+        else:
+          content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
+          #post_data = self.rfile.read(content_length) # <--- Gets the data itself
+          parsed_path = urllib.parse.urlparse(self.path)
+          #params=parse_qs(post_data)
+          logging.info("POST request,\nPath: %s\nHeaders:\n%s\n\nBody:\n%s\n",
+                 str(self.path), str(self.headers), post_data.decode('utf-8'))
+          myProgram=Route().get_route(myroute=self.path.split("?")[0],myparams=parsed_path.query)
+
+
+          print("myparams ; my upload", myProgram.get_upload())
+
+          r, info=self.deal_post_data(myattribute=myProgram.get_upload())
+          myProgram.run(param=r)
+          self._set_response(pic=myProgram.get_pic())
+          print(myProgram,post_data, "y mrograù")
+          html=myProgram.get_html()
+          #print(html)
+          self.wfile.write(bytes(html))
 
 def run(server_class=HTTPServer, handler_class=S, port=8080):
     logging.basicConfig(level=logging.INFO)
