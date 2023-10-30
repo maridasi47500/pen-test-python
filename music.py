@@ -18,7 +18,7 @@ class Music(Myfunc):
     return self
   def recording(self,params):
     print(params, "params recording")
-    self.set_upload("recording")
+    self.set_uploads(["recording"])
     print(self.get_upload(), "upload...")
     self.figure.set_content(Fichier("./welcome","index.html").lire())
 

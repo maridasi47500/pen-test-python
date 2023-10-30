@@ -1,0 +1,5 @@
+<p>
+<%= str((my_params['myoutput'])) %>
+</p>
+<%= "bytes" if type(my_params['myoutput']) is bytes else "not bytes" %>
+<%="le branchement n'a pas fonctionné" if type(my_params['myoutput']) is not bytes else 'le branchement du haut parleur a fonctionné'%>

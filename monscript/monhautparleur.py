@@ -190,4 +190,7 @@ if __name__ == "__main__":
     print("Init bluetooth...")
     bl = Bluetoothctl()
     print("Ready!")
-    bl.connect(os.environ['MONHAUTPARLEUR'])
+    try:
+      bl.connect(os.environ['MONHAUTPARLEUR'])
+    except KeyError:
+      print("vous n'avez pas précisé de variable MONHAUTPARLEUR=\"macaddress\" dans le ./venv/bin/activate")

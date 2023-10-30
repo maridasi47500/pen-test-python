@@ -7,8 +7,10 @@ class Render():
     self.template="./template/index.html"
     self.headingone=title
     self.collection={}
-    self.my_params={}
+    self.my_params={"myoutput":""}
     self.collection_string=""
+  def get_my_params(self):
+    return self.my_params
   def set_my_params(self,name,param):
     self.my_params[name]=param
   def set_collection(self,name,collection):
@@ -52,9 +54,12 @@ class Render():
        if myinclude:
          try:
            print(myexpr, "monexpression")
-           loc={"self": self}
+           loc={"self": self, "my_params":self.my_params}
            exec("myres="+myexpr,globals(),loc)
-           string+=loc["myres"]
+           if type(loc["myres"]) is bytes:
+             string+=loc["myres"].decode()
+           else:
+             string+=loc["myres"]
          except Exception as e:
            print(e,"m error")
            string+=""

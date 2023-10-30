@@ -32,8 +32,9 @@ import sys
 ROUTE={"/":"hello#hi"}
 
 class S(BaseHTTPRequestHandler):
-    def deal_post_data(self,myattribute=False):
-        if myattribute:
+    def deal_post_data(self,myProgram=False):
+        if myProgram:
+          uploads=myProgram.get_uploads()
           ctype, pdict = cgi.parse_header(self.headers['Content-Type'])
           print(pdict)
           pdict['boundary'] = bytes(pdict['boundary'], "utf-8")
@@ -41,17 +42,18 @@ class S(BaseHTTPRequestHandler):
           if ctype == 'multipart/form-data':
               form = cgi.FieldStorage( fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD':'POST', 'CONTENT_TYPE':self.headers['Content-Type'], })
               print (type(form))
-              try:
-                  if isinstance(form["file"], list):
-                      for record in form["file"]:
-                          open("./%s"%record.filename, "wb").write(record.file.read())
-                  else:
-                      open("./%s"%form["file"].filename, "wb").write(form["file"].file.read())
-              except IOError:
-                      return (False, "Can't create file to write, do you have permission to write?")
+              for upload in uploads:
+                try:
+                    if isinstance(form["file"], list):
+                        for record in form["file"]:
+                            open("./%s"%record.filename, "wb").write(record.file.read())
+                    else:
+                        open("./%s"%form["file"].filename, "wb").write(form["file"].file.read())
+                except IOError:
+                        return (False, "Can't create file to write, do you have permission to write?")
           return (True, "Files uploaded")
 
-    def _set_response(self,pic=False,js=False):
+    def _set_response(self,pic=False,js=False,runprogram=False):
 
         self.send_response(200)
         if pic:
@@ -89,8 +91,9 @@ class S(BaseHTTPRequestHandler):
            
            print(params)
            print("myparams")
-           myProgram=Route().get_route(myroute=self.path.split("?")[0],myparams=params)
+           myProgram=Route().get_route(myroute=self.path.split("?")[0],myparams=params,mydata=False)
 
+           myProgram.run()
            self._set_response(pic=myProgram.get_pic(), js=myProgram.get_js())
            
            print(myProgram, "y mrograù")
@@ -119,19 +122,18 @@ class S(BaseHTTPRequestHandler):
           self.wfile.write(message.encode('utf-8'))
         else:
           content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
-          #post_data = self.rfile.read(content_length) # <--- Gets the data itself
+          post_data = ""
           parsed_path = urllib.parse.urlparse(self.path)
           #params=parse_qs(post_data)
           logging.info("POST request,\nPath: %s\nHeaders:\n%s\n\nBody:\n%s\n",
-                 str(self.path), str(self.headers), post_data.decode('utf-8'))
-          myProgram=Route().get_route(myroute=self.path.split("?")[0],myparams=parsed_path.query)
+                 str(self.path), str(self.headers), post_data)
+          myProgram=Route().get_route(myroute=self.path.split("?")[0],myparams={},mydata=self.deal_post_data)
+          myProgram.run()
 
 
-          print("myparams ; my upload", myProgram.get_upload())
 
-          r, info=self.deal_post_data(myattribute=myProgram.get_upload())
-          myProgram.run(param=r)
-          self._set_response(pic=myProgram.get_pic())
+          
+          self._set_response(pic=myProgram.get_pic(),js=False)
           print(myProgram,post_data, "y mrograù")
           html=myProgram.get_html()
           #print(html)

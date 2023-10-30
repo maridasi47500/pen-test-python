@@ -27,9 +27,10 @@ r"/music$":"Music#music",
 r"/traduire$":"Traduction#traduire",
 
 }
-  def get_route(self,myroute,myparams):
+  def get_route(self,myroute,myparams,mydata):
     print(myroute,myparams)
     print("myroute")
+
     self.params=myparams
     if myroute.endswith("ico"):
         myProgram=Pic(myroute)
@@ -44,9 +45,12 @@ r"/traduire$":"Traduction#traduire",
             print(j, "my func found")
             loc = {}
             print("myvar="+j.split("#")[0]+"('"+j.split("#")[1]+"').work(params=params).encode()".format(params=myparams))
-            exec("myvar="+j.split("#")[0]+"('"+j.split("#")[1]+"').work(params={params})".format(params=myparams),globals(),loc)
+            exec("myvar="+j.split("#")[0]+"('"+j.split("#")[1]+"')",globals(),loc)
             print(loc["myvar"])
             print("loc")
+            if mydata:
+                exec("myvar=mydata(myProgram=myvar)",globals(), loc)
+            exec("myvar=myvar.work(params={params})".format(params=myparams),globals(),loc)
             return loc["myvar"]
         mytext=(Erreur().err404())
         return mytext

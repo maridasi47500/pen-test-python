@@ -11,7 +11,7 @@ $("[name='image']").on('change', function () {
 $('.submitbtn').on('click', function () {
   $.ajax({
     // Your server script to process the upload
-    url: '/echo',
+    url: '/recording',
     type: 'POST',
 
     // Form data
