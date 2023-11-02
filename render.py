@@ -1,5 +1,6 @@
 from fichier import Fichier
 import os
+from db import Db
 class Render():
   def __init__(self,title):
     self.title=title
@@ -15,7 +16,7 @@ class Render():
     self.my_params[name]=param
   def set_collection(self,name,collection):
     self.collection[name]=collection
-  def render_collection(self,path,view,mycollection,erreur):
+  def render_collection(self,path,view,mycollection,as_,erreur):
     try:
       myview=open(os.path.abspath(path+"/"+view), "r").read()
       string=""
@@ -23,18 +24,25 @@ class Render():
       print(len(mycollection),"my collection")
       for res in mycollection:
         for x in myview.split("<%="):
-           y=x.split("%>")
-           myexpr=y[0]
-           try:
-             mystr=y[1]
-           except:
-             mystr=""
-           try:
-             
-             string+=eval(myexpr)
-           except:
-             string+=""
-           string+=mystr
+           if "%>" not in x: 
+             string+=x
+             continue
+           else:
+             y=x.split("%>")
+             myexpr=y[0]
+             print(myexpr)
+             try:
+               mystr=y[1]
+             except:
+               mystr=""
+             try:
+               loc={as_: res}
+               print(loc)
+               string+=eval(myexpr, globals(), loc)
+             except:
+               string+=""
+             string+=mystr
+
       return string
     except Exception as e:
       return "<p>{erreur}</p>".format(erreur=(erreur+str(e)))
@@ -54,7 +62,7 @@ class Render():
        if myinclude:
          try:
            print(myexpr, "monexpression")
-           loc={"self": self, "my_params":self.my_params}
+           loc={"self": self,"Db":Db,"render_collection":self.render_collection, "my_params":self.my_params}
            exec("myres="+myexpr,globals(),loc)
            if type(loc["myres"]) is bytes:
              string+=loc["myres"].decode()
@@ -86,6 +94,8 @@ class Render():
   def ajouter_a_mes_mots(self,mot):
     self.body += mot
   def render_figure(self):
-    self.render_body()
+
     template=open(self.template,"r").read()
-    return template.format(mots=self.get_headingone(),debutdemesmots=self.get_title(),partiedemesmot=self.get_body())
+    self.body= template.format(mots=self.get_headingone(),debutdemesmots=self.get_title(),partiedemesmot=self.get_body())
+    self.render_body()
+    return self.body

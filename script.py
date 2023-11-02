@@ -39,19 +39,25 @@ class S(BaseHTTPRequestHandler):
           print(pdict)
           pdict['boundary'] = bytes(pdict['boundary'], "utf-8")
           pdict['CONTENT-LENGTH'] = int(self.headers['Content-Length'])
+          print(ctype, "type of form")
           if ctype == 'multipart/form-data':
               form = cgi.FieldStorage( fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD':'POST', 'CONTENT_TYPE':self.headers['Content-Type'], })
-              print (type(form))
-              for upload in uploads:
-                try:
-                    if isinstance(form["file"], list):
-                        for record in form["file"]:
-                            open("./%s"%record.filename, "wb").write(record.file.read())
-                    else:
-                        open("./%s"%form["file"].filename, "wb").write(form["file"].file.read())
-                except IOError:
-                        return (False, "Can't create file to write, do you have permission to write?")
-          return (True, "Files uploaded")
+              print(type(form), "typemyform")
+              print(uploads, "uploads")
+              if uploads:
+                for upload in uploads:
+                  try:
+                      print(form[upload], "check param ", upload)
+                      if isinstance(form[upload], list):
+                          for record in form[upload]:
+                              open("./%s"%record.filename, "wb").write(record.file.read())
+                      else:
+                          open("./%s"%form[upload].filename, "wb").write(form[upload].file.read())
+                  except IOError:
+                          #return (False, "Can't create file to write, do you have permission to write?")
+                          return myProgram
+          #return (True, "Files uploaded")
+          return myProgram
 
     def _set_response(self,pic=False,js=False,runprogram=False):
 
@@ -129,10 +135,6 @@ class S(BaseHTTPRequestHandler):
                  str(self.path), str(self.headers), post_data)
           myProgram=Route().get_route(myroute=self.path.split("?")[0],myparams={},mydata=self.deal_post_data)
           myProgram.run()
-
-
-
-          
           self._set_response(pic=myProgram.get_pic(),js=False)
           print(myProgram,post_data, "y mrograù")
           html=myProgram.get_html()

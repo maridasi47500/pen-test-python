@@ -9,6 +9,7 @@ class Myfunc():
     myfile=False
     my_params=figure.get_my_params()
     myattributes=[]
+    
     myprmogram=False
     run=False
     path=False
@@ -59,6 +60,8 @@ class Myfunc():
     def set_uploads(self,name):
         self.upload=name
     def get_uploads(self):
+        return self.upload
+    def get_upload(self):
         return self.upload
     def get_html(self):
         return self.get_figure().render_figure().encode()

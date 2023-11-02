@@ -22,12 +22,13 @@ r"/variables$":"Hello#variable",
 r"/airpods$":"Hello#airpods",
 r"/bing$":"Bing#search",
 r"/recording$":"Music#recording",
+r"/tuner$":"Music#tuner",
 r"/traduit$":"Traduction#traduit",
 r"/music$":"Music#music",
 r"/traduire$":"Traduction#traduire",
 
 }
-  def get_route(self,myroute,myparams,mydata):
+  def get_route(self,myroute,myparams,mydata=None):
     print(myroute,myparams)
     print("myroute")
 
@@ -47,9 +48,14 @@ r"/traduire$":"Traduction#traduire",
             print("myvar="+j.split("#")[0]+"('"+j.split("#")[1]+"').work(params=params).encode()".format(params=myparams))
             exec("myvar="+j.split("#")[0]+"('"+j.split("#")[1]+"')",globals(),loc)
             print(loc["myvar"])
-            print("loc")
+            print("=my var")
+            print(mydata)
+            print("=my data")
             if mydata:
+                loc["mydata"]=mydata
                 exec("myvar=mydata(myProgram=myvar)",globals(), loc)
+                print(loc["mydata"])
+                print("=mydata")
             exec("myvar=myvar.work(params={params})".format(params=myparams),globals(),loc)
             return loc["myvar"]
         mytext=(Erreur().err404())
