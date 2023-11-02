@@ -4,6 +4,7 @@ from subprocess import check_output as runmyscript
 class Myfunc():
     pic=False
     js=False
+    mymusic=False
     figure=Render("hi") 
     upload=False
     myfile=False
@@ -51,6 +52,8 @@ class Myfunc():
         return self.figure
     def get_pic(self):
         return self.pic
+    def get_music(self):
+        return self.mymusic
     def get_js(self):
         return self.js
     def set_attributes(self,name):

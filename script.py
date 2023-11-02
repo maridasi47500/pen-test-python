@@ -59,11 +59,13 @@ class S(BaseHTTPRequestHandler):
           #return (True, "Files uploaded")
           return myProgram
 
-    def _set_response(self,pic=False,js=False,runprogram=False):
+    def _set_response(self,pic=False,js=False,runprogram=False,music=False):
 
         self.send_response(200)
         if pic:
           self.send_header('Content-type', 'image/'+pic)
+        elif music:
+          self.send_header('Content-type', 'audio/'+music)
         elif js:
           self.send_header('Content-type', 'text/javascript')
 
@@ -100,7 +102,7 @@ class S(BaseHTTPRequestHandler):
            myProgram=Route().get_route(myroute=self.path.split("?")[0],myparams=params,mydata=False)
 
            myProgram.run()
-           self._set_response(pic=myProgram.get_pic(), js=myProgram.get_js())
+           self._set_response(pic=myProgram.get_pic(), js=myProgram.get_js(),music=myProgram.get_music())
            
            print(myProgram, "y mrograù")
            html=myProgram.get_html()

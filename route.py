@@ -6,6 +6,7 @@ from mybing import Bing
 from traduction import Traduction
 from mypic import Pic
 from music import Music
+from son import Son
 from javascript import Js
 
 
@@ -23,6 +24,7 @@ r"/airpods$":"Hello#airpods",
 r"/bing$":"Bing#search",
 r"/recording$":"Music#recording",
 r"/tuner$":"Music#tuner",
+r"/tunerinstrument$":"Music#tunerinstrument",
 r"/traduit$":"Traduction#traduit",
 r"/music$":"Music#music",
 r"/traduire$":"Traduction#traduire",
@@ -35,6 +37,9 @@ r"/traduire$":"Traduction#traduire",
     self.params=myparams
     if myroute.endswith("ico"):
         myProgram=Pic(myroute)
+        return myProgram
+    elif myroute.endswith(".wav"):
+        myProgram=Son(name=myroute)
         return myProgram
     elif myroute.endswith(".js"):
         myProgram=Js(name=myroute)

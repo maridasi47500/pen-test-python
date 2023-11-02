@@ -16,6 +16,7 @@ OU
 <a href="/music">ajouter un fichier de musique</a>
 <a href="/bienvenue">welcome</a></nav>
 <%=render_collection(path="./music", view="menu.html", mycollection=Db().get_musicalinstruments(), erreur="pas d'instruments de musique", as_="note")%>
+<%=render_collection(path="./music", view="menuinstrument.html", mycollection=Db().get_othermusicalinstruments(), erreur="pas d'instruments de musique", as_="note")%>
 <h1>{mots}</h1>
 {partiedemesmot}
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
