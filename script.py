@@ -42,17 +42,36 @@ class S(BaseHTTPRequestHandler):
           print(ctype, "type of form")
           if ctype == 'multipart/form-data':
               form = cgi.FieldStorage( fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD':'POST', 'CONTENT_TYPE':self.headers['Content-Type'], })
-              print(type(form), "typemyform")
-              print(uploads, "uploads")
+              print(type(form), "=====> DEAL_POST_DATA typemyform")
+              print(uploads, "===> uploads")
+              myuploads={}
               if uploads:
                 for upload in uploads:
                   try:
-                      print(form[upload], "check param ", upload)
-                      if isinstance(form[upload], list):
-                          for record in form[upload]:
-                              open("./%s"%record.filename, "wb").write(record.file.read())
-                      else:
-                          open("./%s"%form[upload].filename, "wb").write(form[upload].file.read())
+                      print("check ", upload)
+
+                      try:
+                        if form[upload].filename:
+                          if isinstance(form[upload], list):
+                              for record in form[upload]:
+                                  open("./uploads/%s"%record.filename, "wb").write(record.file.read())
+                          else:
+                              open("./uploads/%s"%form[upload].filename, "wb").write(form[upload].file.read())
+                          print("name")
+                          myuploads[upload]=form[upload].filename
+                        else:
+                          print("my name")
+                          print(form[upload].value)
+                          myuploads[upload]=form[upload].value
+                          myProgram.get_figure().set_my_params(upload, myuploads[upload])
+                      except Exception as e:
+                          print(e)
+                          print("this name")
+
+                          myuploads[upload]=form[upload].value
+                          myProgram.get_figure().set_my_params(upload, myuploads[upload])
+                      finally:
+                          print("suivant", myuploads)
                   except IOError:
                           #return (False, "Can't create file to write, do you have permission to write?")
                           return myProgram

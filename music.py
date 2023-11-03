@@ -7,6 +7,7 @@ import subprocess
 import urllib
 from myfunc import Myfunc
 from db import Db
+from myrecording import Myrecording
 
 
 import numpy as np
@@ -62,11 +63,10 @@ class Music(Myfunc):
     return self
   def recording(self,params):
     print(params, "params recording")
-    self.set_uploads(["recording"])
+    self.set_uploads({"myrecording":["recording", "name"]}) #
     print(self.get_upload(), "upload...")
     self.figure.set_content(Fichier("./welcome","index.html").lire())
 
-    self.figure.ajouter_a_mes_mots(Fichier("./music","music.html").lire())
 
     return self
 
