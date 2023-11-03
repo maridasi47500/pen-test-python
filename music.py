@@ -19,6 +19,7 @@ class Music(Myfunc):
     self.figure=Render(self.title)
     self.results=Render(self.title)
     self.upload=False
+    self.recparams=["recording", "name"]
   def tunerinstrument(self,params):
     self.figure.set_content(Fichier("./music","tuner.html").lire())
 
@@ -61,10 +62,12 @@ class Music(Myfunc):
 
     self.figure.ajouter_a_mes_mots("sauver cet enregistrement dans cette page puis voir le morceau")
     return self
-  def recording(self,params):
+  def recording(self,params,mydata):
     print(params, "params recording")
-    self.set_uploads({"myrecording":["recording", "name"]}) #
-    print(self.get_upload(), "upload...")
+
+    rec=Myrecording().new(mydata(self.recparams))
+    if rec.save():
+      print("uploaded and save...")
     self.figure.set_content(Fichier("./welcome","index.html").lire())
 
 

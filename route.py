@@ -56,15 +56,18 @@ r"/traduire$":"Traduction#traduire",
             print("=my var")
             print(mydata)
             print("=my data")
+            loc["myparams"]={}
+            loc["mydata"]=None
 
 
-
-            exec("myvar=myvar.work(params={params})".format(params=myparams),globals(),loc)
             if mydata:
+
                 loc["mydata"]=mydata
-                exec("myvar=mydata(myProgram=myvar)",globals(), loc)
                 print(loc["mydata"])
                 print("=mydata")
+
+            exec("myvar=myvar.work(params=myparams,data=mydata)",globals(),loc)
+
             return loc["myvar"]
         mytext=(Erreur().err404())
         return mytext

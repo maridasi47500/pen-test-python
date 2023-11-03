@@ -170,11 +170,19 @@ class Db():
                                         UNIQUE(musicalinstrument_id, note) ON CONFLICT REPLACE,
                                     FOREIGN KEY (musicalinstrument_id) REFERENCES musicalinstruments (id)
                                 );"""
+    sql3 = """CREATE TABLE IF NOT EXISTS musics (
+                                    id integer PRIMARY KEY autoincrement,
+                                    title text NOT NULL,
+                                    artist text NOT NULL,
+                                    filename text NOT NULL,
+                                    tonalite text NOT NULL,
+                                );"""
     self.create_connection(self.db)
     conn = sqlite3.connect(self.db)
     if conn is not None:
         self.create_table(conn,sql1)
         self.create_table(conn,sql2)
+        self.create_table(conn,sql3)
         print("key")
         myarr=("violon",)
         self.create_musicali(conn,myarr)
