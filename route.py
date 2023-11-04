@@ -25,6 +25,7 @@ r"/bing$":"Bing#search",
 r"/recording$":"Music#recording",
 r"/tuner$":"Music#tuner",
 r"/tunerinstrument$":"Music#tunerinstrument",
+r"/mymusic$":"Music#normalizeaudio",
 r"/traduit$":"Traduction#traduit",
 r"/music$":"Music#music",
 r"/traduire$":"Traduction#traduire",
@@ -56,17 +57,17 @@ r"/traduire$":"Traduction#traduire",
             print("=my var")
             print(mydata)
             print("=my data")
-            loc["myparams"]={}
-            loc["mydata"]=None
+            loc["myparams"]=myparams
+            #loc["mydata"]=None
 
 
             if mydata:
 
-                loc["mydata"]=mydata
+                loc["myvar"].set_mydata(mydata)
                 print(loc["mydata"])
                 print("=mydata")
 
-            exec("myvar=myvar.work(params=myparams,data=mydata)",globals(),loc)
+            exec("myvar=myvar.work(params=myparams)",globals(),loc)
 
             return loc["myvar"]
         mytext=(Erreur().err404())

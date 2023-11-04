@@ -62,15 +62,22 @@ class Music(Myfunc):
 
     self.figure.ajouter_a_mes_mots("sauver cet enregistrement dans cette page puis voir le morceau")
     return self
-  def recording(self,params,mydata):
+  def recording(self,params):
     print(params, "params recording")
 
-    rec=Myrecording().new(mydata(self.recparams))
+    rec=Myrecording().new(self.get_mydata()(self.recparams))
     if rec.save():
       print("uploaded and save...")
     self.figure.set_content(Fichier("./welcome","index.html").lire())
 
 
     return self
+  def normalizeaudio(self,myscript):
+    print("myscript", myscript)
+    self.figure.set_content(Fichier("./welcome","appareilbluetooth.html").lire())
+    self.set_myargs(["normalize-audio","-m",myscript["mymusic"][0]+"/*"])
+    self.set_runthisprogram(run=True)
+    return self
+
 
 
