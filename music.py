@@ -10,8 +10,8 @@ from db import Db
 from myrecording import Myrecording
 
 
-import numpy as np
-from scipy.io.wavfile import write
+#import numpy as np
+#from scipy.io.wavfile import write
 class Music(Myfunc):
   def __init__(self,path):
     self.path=path
@@ -19,7 +19,7 @@ class Music(Myfunc):
     self.figure=Render(self.title)
     self.results=Render(self.title)
     self.upload=False
-    self.recparams=["recording", "name"]
+    self.recparams=["filename", "artist","title","tonalite"]
   def tunerinstrument(self,params):
     self.figure.set_content(Fichier("./music","tuner.html").lire())
 
