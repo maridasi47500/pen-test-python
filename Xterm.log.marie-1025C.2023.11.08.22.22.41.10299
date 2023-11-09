@@ -1,0 +1,4 @@
+[sudo] Mot de passe de mary : 
+]0;root@marie-1025C: ~/radiohakerroot@marie-1025C:~/radiohaker# rails s
+[33mWarning: the running version of Bundler (2.1.4) is older than the version that created the lockfile (2.2.25). We suggest you to upgrade to the version that created the lockfile by running `gem install bundler:2.2.25`.
+[0m

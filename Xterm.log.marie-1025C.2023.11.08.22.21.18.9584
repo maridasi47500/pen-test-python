@@ -1,0 +1,7 @@
+[sudo] Mot de passe de mary : 
+/usr/lib/ruby/vendor_ruby/bundler/lockfile_parser.rb:72:in `warn_for_outdated_bundler_version': You must use Bundler 2 or greater with this lockfile. (Bundler::LockfileError)
+	from /usr/lib/ruby/vendor_ruby/bundler/lockfile_parser.rb:59:in `initialize'
+	from /home/mary/radiohaker/bin/spring:10:in `new'
+	from /home/mary/radiohaker/bin/spring:10:in `<top (required)>'
+	from bin/rails:3:in `load'
+	from bin/rails:3:in `<main>'
