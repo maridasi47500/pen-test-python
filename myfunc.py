@@ -4,15 +4,27 @@ from subprocess import check_output as runmyscript
 class Myfunc():
     pic=False
     js=False
+    mymusic=False
     figure=Render("hi") 
     upload=False
     myfile=False
+    mydata=False
+    myargs=False
     my_params=figure.get_my_params()
     myattributes=[]
+    
     myprmogram=False
     run=False
     path=False
     runthisprogram=False
+    def set_myargs(self,x):
+        self.myargs=x
+    def get_myargs(self):
+        return self.myargs
+    def set_mydata(self,x):
+        self.mydata=x
+    def get_mydata(self):
+        return self.mydata
     def set_runthisprogram(self,run=False):
         self.runthisprogram=run
     def get_runthisprogram(self):
@@ -30,7 +42,11 @@ class Myfunc():
     def run(self):
         arr=[]
         if self.get_runthisprogram():
-            if self.runprogram():
+            if self.get_myargs():
+                arr=self.get_myargs()
+                script=runmyscript(arr)
+                self.figure.my_params["myoutput"]= script
+            elif self.runprogram():
                 arr.append(self.runprogram())
                 if self.myfile:
                     arr.append(self.get_path()+"/"+self.myfile)
@@ -50,6 +66,8 @@ class Myfunc():
         return self.figure
     def get_pic(self):
         return self.pic
+    def get_music(self):
+        return self.mymusic
     def get_js(self):
         return self.js
     def set_attributes(self,name):
@@ -59,6 +77,8 @@ class Myfunc():
     def set_uploads(self,name):
         self.upload=name
     def get_uploads(self):
+        return self.upload
+    def get_upload(self):
         return self.upload
     def get_html(self):
         return self.get_figure().render_figure().encode()

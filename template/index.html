@@ -1,3 +1,5 @@
+<!DOCTYPE html> 
+
 <html>
 
 <head>
@@ -24,6 +26,9 @@ Ma connexion internet
 <a href="/traduit">traduit quelque chose</a>
 <a href="/music">ajouter un fichier de musique</a>
 <a href="/bienvenue">welcome</a></nav>
+<form action="/mymusic" method="post">entre dans ton terminal et fait pwd là où sont tous tes enregistrement copy ça ici pour egaliser tout tes enregistrement au meme volume:<input type="text" name="mymusic"/><input type="submit" value="ok"/></form>
+<%=render_collection(path="./music", view="menu.html", mycollection=Db().get_musicalinstruments(), erreur="pas d'instruments de musique", as_="note")%>
+<%=render_collection(path="./music", view="menuinstrument.html", mycollection=Db().get_othermusicalinstruments(), erreur="pas d'instruments de musique", as_="note")%>
 <h1>{mots}</h1>
 {partiedemesmot}
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>

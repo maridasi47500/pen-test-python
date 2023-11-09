@@ -6,6 +6,7 @@ from mybing import Bing
 from traduction import Traduction
 from mypic import Pic
 from music import Music
+from son import Son
 from javascript import Js
 
 
@@ -24,18 +25,24 @@ r"/variables$":"Hello#variable",
 r"/airpods$":"Hello#airpods",
 r"/bing$":"Bing#search",
 r"/recording$":"Music#recording",
+r"/tuner$":"Music#tuner",
+r"/tunerinstrument$":"Music#tunerinstrument",
+r"/mymusic$":"Music#normalizeaudio",
 r"/traduit$":"Traduction#traduit",
 r"/music$":"Music#music",
 r"/traduire$":"Traduction#traduire",
 
 }
-  def get_route(self,myroute,myparams,mydata):
+  def get_route(self,myroute,myparams,mydata=None):
     print(myroute,myparams)
     print("myroute")
 
     self.params=myparams
     if myroute.endswith("ico"):
         myProgram=Pic(myroute)
+        return myProgram
+    elif myroute.endswith(".wav"):
+        myProgram=Son(name=myroute)
         return myProgram
     elif myroute.endswith(".js"):
         myProgram=Js(name=myroute)
@@ -49,10 +56,21 @@ r"/traduire$":"Traduction#traduire",
             print("myvar="+j.split("#")[0]+"('"+j.split("#")[1]+"').work(params=params).encode()".format(params=myparams))
             exec("myvar="+j.split("#")[0]+"('"+j.split("#")[1]+"')",globals(),loc)
             print(loc["myvar"])
-            print("loc")
+            print("=my var")
+            print(mydata)
+            print("=my data")
+            loc["myparams"]=myparams
+            #loc["mydata"]=None
+
+
             if mydata:
-                exec("myvar=mydata(myProgram=myvar)",globals(), loc)
-            exec("myvar=myvar.work(params={params})".format(params=myparams),globals(),loc)
+
+                loc["myvar"].set_mydata(mydata)
+                print(loc["mydata"])
+                print("=mydata")
+
+            exec("myvar=myvar.work(params=myparams)",globals(),loc)
+
             return loc["myvar"]
         mytext=(Erreur().err404())
         return mytext

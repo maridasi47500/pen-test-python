@@ -8,7 +8,7 @@ $("[name='image']").on('change', function () {
 
   // Also see .name, .type
 });
-$('.submitbtn').on('click', function () {
+$('#recordingform').on('submit', function () {
   $.ajax({
     // Your server script to process the upload
     url: '/recording',

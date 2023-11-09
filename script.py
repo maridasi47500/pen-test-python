@@ -32,32 +32,52 @@ import sys
 ROUTE={"/":"hello#hi"}
 
 class S(BaseHTTPRequestHandler):
-    def deal_post_data(self,myProgram=False):
-        if myProgram:
+    def deal_post_data(self,uploads=False):
+        if uploads:
+          myuploads={}
           uploads=myProgram.get_uploads()
           ctype, pdict = cgi.parse_header(self.headers['Content-Type'])
           print(pdict)
           pdict['boundary'] = bytes(pdict['boundary'], "utf-8")
           pdict['CONTENT-LENGTH'] = int(self.headers['Content-Length'])
+          print(ctype, "type of form")
           if ctype == 'multipart/form-data':
               form = cgi.FieldStorage( fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD':'POST', 'CONTENT_TYPE':self.headers['Content-Type'], })
-              print (type(form))
-              for upload in uploads:
-                try:
-                    if isinstance(form["file"], list):
-                        for record in form["file"]:
-                            open("./%s"%record.filename, "wb").write(record.file.read())
-                    else:
-                        open("./%s"%form["file"].filename, "wb").write(form["file"].file.read())
-                except IOError:
-                        return (False, "Can't create file to write, do you have permission to write?")
-          return (True, "Files uploaded")
+              print(type(form), "=====> DEAL_POST_DATA typemyform")
+              print(uploads, "===> uploads")
 
-    def _set_response(self,pic=False,js=False,runprogram=False):
+              if uploads:
+                for upload in uploads:
+                  try:
+                      print("check ", upload)
+
+                      try:
+                        if form[upload].filename:
+                          myuploads[upload]={upload:form[upload]}
+                        else:
+                          print("my name")
+                          print(form[upload].value)
+                          myuploads[upload]=form[upload].value
+                      except Exception as e:
+                          print(e)
+                          print("this name")
+
+                          myuploads[upload]=form[upload].value
+                      finally:
+                          print("suivant", myuploads)
+                  except IOError:
+                          #return (False, "Can't create file to write, do you have permission to write?")
+                          return myuploads
+          #return (True, "Files uploaded")
+          return myuploads
+
+    def _set_response(self,pic=False,js=False,runprogram=False,music=False):
 
         self.send_response(200)
         if pic:
           self.send_header('Content-type', 'image/'+pic)
+        elif music:
+          self.send_header('Content-type', 'audio/'+music)
         elif js:
           self.send_header('Content-type', 'text/javascript')
 
@@ -94,7 +114,7 @@ class S(BaseHTTPRequestHandler):
            myProgram=Route().get_route(myroute=self.path.split("?")[0],myparams=params,mydata=False)
 
            myProgram.run()
-           self._set_response(pic=myProgram.get_pic(), js=myProgram.get_js())
+           self._set_response(pic=myProgram.get_pic(), js=myProgram.get_js(),music=myProgram.get_music())
            
            print(myProgram, "y mrograù")
            html=myProgram.get_html()
@@ -129,10 +149,6 @@ class S(BaseHTTPRequestHandler):
                  str(self.path), str(self.headers), post_data)
           myProgram=Route().get_route(myroute=self.path.split("?")[0],myparams={},mydata=self.deal_post_data)
           myProgram.run()
-
-
-
-          
           self._set_response(pic=myProgram.get_pic(),js=False)
           print(myProgram,post_data, "y mrograù")
           html=myProgram.get_html()
