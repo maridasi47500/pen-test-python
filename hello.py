@@ -15,6 +15,20 @@ class Hello(Myfunc):
     self.figure.set_content(Fichier("./welcome","index.html").lire())
     print("hi there")
     return self
+  def maradio(self,myscript):
+    print("myscript", myscript)
+    self.figure.set_content(Fichier("./welcome","appareilbluetooth.html").lire())
+    self.set_path("./monscript")
+    self.set_file("maradio.sh")
+    self.set_runthisprogram(run=True)
+    return self
+  def tether(self,myscript):
+    print("myscript", myscript)
+    self.figure.set_content(Fichier("./welcome","appareilbluetooth.html").lire())
+    self.set_path("./monscript")
+    self.set_file("usb.py")
+    self.set_runthisprogram(run=True)
+    return self
   def bluetooth(self,myscript):
     print("myscript", myscript)
     self.figure.set_content(Fichier("./welcome","appareilbluetooth.html").lire())

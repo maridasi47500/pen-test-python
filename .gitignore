@@ -1,4 +1,6 @@
 .env
 monscript/.env
 venv/bin/activate
+Xterm.log.*
 uploads/*
+__pycache__

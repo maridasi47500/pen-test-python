@@ -192,5 +192,5 @@ if __name__ == "__main__":
     print("Ready!")
     try:
       bl.connect(os.environ['MONHAUTPARLEUR'])
-    except KeyError:
-      print("vous n'avez pas précisé de variable MONHAUTPARLEUR=\"macaddress\" dans le ./venv/bin/activate")
+    except KeyError as e:
+      print("vous n'avez pas précisé de variable MONHAUTPARLEUR=\"macaddress\" dans le ./venv/bin/activate avec 'export MONHAUTPARLEUR='maccaddress''"+str(e))
