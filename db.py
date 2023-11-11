@@ -111,6 +111,53 @@ class Db():
       finally:
           if conn:
               conn.close()
+  def get_musics(self):
+      """
+      Create a new project into the projects table
+      :param conn:
+      :param project:
+      :return: project id
+      """
+      try:
+        sql = ''' select * from musics'''
+        conn = sqlite3.connect(self.db)
+        cur = conn.cursor()
+        cur.row_factory = sqlite3.Row
+        cur.execute(sql)
+        conn.commit()
+        return cur.fetchall()
+      except Error as e:
+        print(e)
+        return []
+      finally:
+          if conn:
+              conn.close()
+  def create_music(self, project):
+      """
+      Create a new project into the projects table
+      :param conn:
+      :param project:
+      :return: project id
+      """
+      try:
+        sql = ''' INSERT OR IGNORE INTO musics (filename,title,artist,tonalite)
+                  VALUES(?,?,?,?) '''
+        conn = sqlite3.connect(self.db)
+        cur = conn.cursor()
+        cur.row_factory = sqlite3.Row
+        cur.execute(sql, project)
+        conn.commit()
+        item= cur.fetchone()
+
+      except Error as e:
+        print(e,"erreur dans base donnee")
+        item= {}
+        return {}
+      finally:
+          if conn:
+              conn.close()
+          return item
+
   def create_musicali(self,conn, project):
       """
       Create a new project into the projects table
@@ -175,7 +222,7 @@ class Db():
                                     title text NOT NULL,
                                     artist text NOT NULL,
                                     filename text NOT NULL,
-                                    tonalite text NOT NULL,
+                                    tonalite text NOT NULL
                                 );"""
     self.create_connection(self.db)
     conn = sqlite3.connect(self.db)

@@ -11,8 +11,9 @@ class Myrecording(Mymodel):
         self.filename=uploaded_io.filename
     def get_filename(self):
         return self.recording
-    def save(self):
-        x=Db()
+    def mynew(self):
+        x=Db().create_music((self.filename, self.title,self.artist,self.tonalite))
+        return x
     def set_artist(self,string):
         self.artist=string
     def get_artist(self,string):

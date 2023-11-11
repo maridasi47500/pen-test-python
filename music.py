@@ -57,6 +57,11 @@ class Music(Myfunc):
 
 
     return self
+  def allmymusic(self,params):
+    self.figure.set_content(Fichier("./music","all.html").lire())
+
+    self.figure.ajouter_a_mes_mots("page web des enregistrements musique")
+    return self
   def music(self,params):
     self.figure.set_content(Fichier("./music","_form.html").lire())
 
@@ -64,9 +69,10 @@ class Music(Myfunc):
     return self
   def recording(self,params):
     print(params, "params recording")
+    somedata=self.get_mydata()(self.recparams)
 
-    rec=Myrecording().new(self.get_mydata()(self.recparams))
-    if rec.save():
+    rec=Myrecording(somedata).mynew()
+    if rec:
       print("uploaded and save...")
     self.figure.set_content(Fichier("./welcome","index.html").lire())
 

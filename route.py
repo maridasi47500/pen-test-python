@@ -30,6 +30,7 @@ r"/tunerinstrument$":"Music#tunerinstrument",
 r"/mymusic$":"Music#normalizeaudio",
 r"/traduit$":"Traduction#traduit",
 r"/music$":"Music#music",
+r"/allmymusic$":"Music#allmymusic",
 r"/traduire$":"Traduction#traduire",
 
 }
@@ -66,7 +67,8 @@ r"/traduire$":"Traduction#traduire",
             if mydata:
 
                 loc["myvar"].set_mydata(mydata)
-                print(loc["mydata"])
+                loc["mydata"]=mydata
+                exec("myvar.set_mydata(mydata)",globals(),loc)
                 print("=mydata")
 
             exec("myvar=myvar.work(params=myparams)",globals(),loc)
