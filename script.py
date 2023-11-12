@@ -72,7 +72,7 @@ class S(BaseHTTPRequestHandler):
           print("upload keys", myuploads.keys())
           return myuploads
 
-    def _set_response(self,pic=False,js=False,runprogram=False,music=False):
+    def _set_response(self,pic=False,js=False,runprogram=False,music=False,css=True):
 
         self.send_response(200)
         if pic:
@@ -81,6 +81,8 @@ class S(BaseHTTPRequestHandler):
           self.send_header('Content-type', 'audio/'+music)
         elif js:
           self.send_header('Content-type', 'text/javascript')
+        elif css:
+          self.send_header('Content-type', 'text/stylesheet')
 
         else:
 
@@ -115,7 +117,7 @@ class S(BaseHTTPRequestHandler):
            myProgram=Route().get_route(myroute=self.path.split("?")[0],myparams=params,mydata=False)
 
            myProgram.run()
-           self._set_response(pic=myProgram.get_pic(), js=myProgram.get_js(),music=myProgram.get_music())
+           self._set_response(pic=myProgram.get_pic(),css=myProgram.get_css(), js=myProgram.get_js(),music=myProgram.get_music())
            
            print(myProgram, "y mrograù")
            html=myProgram.get_html()
@@ -150,7 +152,7 @@ class S(BaseHTTPRequestHandler):
                  str(self.path), str(self.headers), post_data)
           myProgram=Route().get_route(myroute=self.path.split("?")[0],myparams={},mydata=self.deal_post_data)
           myProgram.run()
-          self._set_response(pic=myProgram.get_pic(),js=False)
+          self._set_response(pic=myProgram.get_pic(),css=myProgram.get_css(), js=myProgram.get_js(),music=myProgram.get_music())
           print(myProgram,post_data, "y mrograù")
           html=myProgram.get_html()
           #print(html)

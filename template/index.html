@@ -5,6 +5,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>{debutdemesmots}</title>
+<link rel="stylesheet" href="/css/mycss.css"/>
 </head>
 <body>
 <nav><div>à la racine tu as un fichir ./venv/bin/activate avec ecrit dedans 'export MESAIRPODS="mac adresse de mes airpods"'(1) </div><a href="/bluetooth">je n'arrive pas à connecer mes appareils blueooth (reinitaliser bluetooth ) (2)</a>
@@ -32,6 +33,16 @@ Ma connexion internet
 <%=render_collection(path="./music", view="menuinstrument.html", mycollection=Db().get_othermusicalinstruments(), erreur="pas d'instruments de musique", as_="note")%>
 <h1>{mots}</h1>
 {partiedemesmot}
+<div id="audio-player-container">
+  <p>Audio Player</p>
+  <button id="play-icon" data-play="&#x25B6;" data-pause="&#8545;">&#x25B6;</button>
+  <span id="current-time" class="time">0:00</span>
+  <input type="range" id="seek-slider" max="100" value="0">
+  <span id="duration" class="time">0:00</span>
+  <output id="volume-output">100</output>
+  <input type="range" id="volume-slider" max="100" value="100">
+  <button id="mute-icon"></button>
+</div>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script src="/js/post.js"></script>
 </body>

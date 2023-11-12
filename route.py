@@ -8,6 +8,7 @@ from mypic import Pic
 from music import Music
 from son import Son
 from javascript import Js
+from stylesheet import Css
 
 
 class Route():
@@ -50,6 +51,9 @@ r"/showmusic/([\d\-]+)":"Music#showmusic",
     elif myroute.endswith(".wav"):
         myProgram=Son(name=myroute)
         return myProgram
+    elif myroute.endswith(".css"):
+        myProgram=Css(name=myroute)
+        return myProgram
     elif myroute.endswith(".js"):
         myProgram=Js(name=myroute)
         return myProgram
@@ -60,7 +64,7 @@ r"/showmusic/([\d\-]+)":"Music#showmusic",
           if m:
 
             groups= m.groups()
-            params["groupsparams"]=groups
+            myparams["groupsparams"]=groups
 
             print(j, "my func found")
             loc = {}

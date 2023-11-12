@@ -1,4 +1,6 @@
 <div class="div1">
+	<a href="javascript:void(0)" class="mamusique" onclick="window.audio.pause();window.audio.src=this.dataset.myurl;return false;" data-myurl="/uploads/<%=music["filename"]%>">
 <p><%=music["artist"]%> - <%=music["title"]%></p>
 <p><%=music["tonalite"]%></p>
+	</a>
 </div>

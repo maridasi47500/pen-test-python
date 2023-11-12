@@ -3,6 +3,7 @@ from subprocess import check_output as runmyscript
 
 class Myfunc():
     pic=False
+    css=False
     js=False
     mymusic=False
     figure=Render("hi") 
@@ -19,6 +20,14 @@ class Myfunc():
     run=False
     path=False
     runthisprogram=False
+    def set_css(self,x):
+        self.css=x
+    def get_css(self):
+        return self.css
+    def set_js(self,x):
+        self.js=x
+    def get_js(self):
+        return self.js
     def set_params(self,x):
         self.params=x
     def get_params(self):
