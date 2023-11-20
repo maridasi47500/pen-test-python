@@ -16,6 +16,9 @@ class Route():
 r"/$":"Hello#hi",
 r"/bienvenue$":"Hello#hi",
 r"/bluetooth$":"Hello#bluetooth",
+r"/cartedispo$":"Hello#cartedispo",
+r"/cartedisporeset$":"Hello#cartedisporeset",
+r"/test$":"Hello#test",
 r"/hautparleur$":"Hello#hautparleur",
 r"/tether$":"Hello#tether",
 r"/maradio$":"Hello#maradio",
@@ -43,7 +46,7 @@ r"/traduire$":"Traduction#traduire",
     else:
         for i in self.route:
           j=self.route[i]
-          if re.match(myroute, i):
+          if re.match(i,myroute):
             print(j, "my func found")
             loc = {}
             print("myvar="+j.split("#")[0]+"('"+j.split("#")[1]+"').work(params=params).encode()".format(params=myparams))

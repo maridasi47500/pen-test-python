@@ -190,7 +190,9 @@ if __name__ == "__main__":
     print("Init bluetooth...")
     bl = Bluetoothctl()
     print("Ready!")
+
     try:
       bl.connect(os.environ['MESAIRPODS'])
+      out = subprocess.check_output("espeak 'test test test'", shell = True)
     except KeyError:
       print("pas de variable MESAIRPODS dans le ./venv/bin/activate")
