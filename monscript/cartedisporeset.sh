@@ -1,3 +1,4 @@
+. ./venv/bin/activate
 pacmd list-cards
 echo "=========\n"
 pacmd list-cards | grep profil
@@ -13,9 +14,21 @@ echo "=========\n"
 echo "=========\n"
 espeak hello
 echo "=========\n"
+echo $MESAIRPODS
+str1=":"
+str2="_"
+
+myairpod=""
+myairpod=$(echo $MESAIRPODS | tr ":" "_")
+echo $myairpod
+
 pacmd set-card-profile 1 a2dp_sink
-pacmd set-default-sink  bluez_sink.E8_85_4B_74_6E_CC
-pacmd set-default-source bluez_sink.E8_85_4B_74_6E_CC.monitor
+echo $myairpod
+pacmd set-default-sink  "bluez_sink.$myairpod"
+
+pacmd set-default-source "bluez_sink.$myairpod.monitor"
+
+
 
 echo "=========\n"
 espeak how are you
