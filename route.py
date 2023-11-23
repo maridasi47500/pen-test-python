@@ -16,6 +16,8 @@ class Route():
 r"/$":"Hello#hi",
 r"/bienvenue$":"Hello#hi",
 r"/bluetooth$":"Hello#bluetooth",
+r"/reseau$":"Hello#reseau",
+r"/desactiverreseau$":"Hello#desactivereseau",
 r"/cartedispo$":"Hello#cartedispo",
 r"/cartedisporeset$":"Hello#cartedisporeset",
 r"/test$":"Hello#test",
