@@ -24,6 +24,9 @@ $('#recordingform').on('submit', function () {
     processData: false,
 
     // Custom XMLHttpRequest
+    success: function (data) {
+	    window.location="/allmymusic";
+    },
     xhr: function () {
       var myXhr = $.ajaxSettings.xhr();
       if (myXhr.upload) {

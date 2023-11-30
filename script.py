@@ -35,16 +35,15 @@ class S(BaseHTTPRequestHandler):
     def deal_post_data(self,uploads=False):
         if uploads:
           myuploads={}
-          uploads=myProgram.get_uploads()
           ctype, pdict = cgi.parse_header(self.headers['Content-Type'])
-          print(pdict)
+          #print(pdict)
           pdict['boundary'] = bytes(pdict['boundary'], "utf-8")
           pdict['CONTENT-LENGTH'] = int(self.headers['Content-Length'])
           print(ctype, "type of form")
           if ctype == 'multipart/form-data':
               form = cgi.FieldStorage( fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD':'POST', 'CONTENT_TYPE':self.headers['Content-Type'], })
               print(type(form), "=====> DEAL_POST_DATA typemyform")
-              print(uploads, "===> uploads")
+              #print(uploads, "===> uploads")
 
               if uploads:
                 for upload in uploads:
@@ -53,22 +52,24 @@ class S(BaseHTTPRequestHandler):
 
                       try:
                         if form[upload].filename:
-                          myuploads[upload]={upload:form[upload]}
+                          myuploads[upload]=form[upload]
                         else:
                           print("my name")
-                          print(form[upload].value)
+                          #print(form[upload].value)
                           myuploads[upload]=form[upload].value
                       except Exception as e:
-                          print(e)
+                          #print(e)
                           print("this name")
 
                           myuploads[upload]=form[upload].value
                       finally:
-                          print("suivant", myuploads)
+                          print("suivant", myuploads.keys())
                   except IOError:
                           #return (False, "Can't create file to write, do you have permission to write?")
+                          print("upload keys", myuploads.keys())
                           return myuploads
           #return (True, "Files uploaded")
+          print("upload keys", myuploads.keys())
           return myuploads
 
     def _set_response(self,pic=False,js=False,runprogram=False,music=False):
