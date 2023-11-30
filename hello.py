@@ -15,6 +15,20 @@ class Hello(Myfunc):
     self.figure.set_content(Fichier("./welcome","index.html").lire())
     print("hi there")
     return self
+  def desactiverreseau(self,myscript):
+    print("myscript", myscript)
+    self.figure.set_content(Fichier("./welcome","appareilbluetooth.html").lire())
+    self.set_path("./monscript")
+    self.set_file("desactiverreseau.sh")
+    self.set_runthisprogram(run=True)
+    return self
+  def reseau(self,myscript):
+    print("myscript", myscript)
+    self.figure.set_content(Fichier("./welcome","appareilbluetooth.html").lire())
+    self.set_path("./monscript")
+    self.set_file("reseau.sh")
+    self.set_runthisprogram(run=True)
+    return self
   def maradio(self,myscript):
     print("myscript", myscript)
     self.figure.set_content(Fichier("./welcome","appareilbluetooth.html").lire())
@@ -37,6 +51,27 @@ class Hello(Myfunc):
     self.set_runthisprogram(run=True)
     return self
 
+  def test(self,myscript):
+    print("myscript", myscript)
+    self.figure.set_content(Fichier("./welcome","appareilbluetooth.html").lire())
+    self.set_path("./monscript")
+    self.set_file("test.sh")
+    self.set_runthisprogram(run=True)
+    return self
+  def cartedisporeset(self,myscript):
+    print("myscript", myscript)
+    self.figure.set_content(Fichier("./welcome","appareilbluetooth.html").lire())
+    self.set_path("./monscript")
+    self.set_file("cartedisporeset.sh")
+    self.set_runthisprogram(run=True)
+    return self
+  def cartedispo(self,myscript):
+    print("myscript", myscript)
+    self.figure.set_content(Fichier("./welcome","appareilbluetooth.html").lire())
+    self.set_path("./monscript")
+    self.set_file("cartedispo.sh")
+    self.set_runthisprogram(run=True)
+    return self
   def variable(self,myscript):
     print("myscript", myscript)
     self.figure.set_content(Fichier("./welcome","appareilbluetooth.html").lire())
