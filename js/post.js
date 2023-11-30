@@ -8,7 +8,7 @@ $("[name='image']").on('change', function () {
 
   // Also see .name, .type
 });
-$('.submitbtn').on('click', function () {
+$('#recordingform').on('submit', function () {
   $.ajax({
     // Your server script to process the upload
     url: '/recording',
@@ -24,6 +24,9 @@ $('.submitbtn').on('click', function () {
     processData: false,
 
     // Custom XMLHttpRequest
+    success: function (data) {
+	    window.location="/allmymusic";
+    },
     xhr: function () {
       var myXhr = $.ajaxSettings.xhr();
       if (myXhr.upload) {

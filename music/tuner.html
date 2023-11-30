@@ -1,0 +1,4 @@
+<p><%=my_params["instrument"]%></p>
+<p><%=my_params["note"]%></p>
+<%=render_collection(path="./music", view="_mytuner.html", mycollection=my_params["notes"], erreur="pas d'instruments de musique", as_="note")%>
+
