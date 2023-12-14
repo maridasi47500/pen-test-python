@@ -1,4 +1,8 @@
 $(function(){
+$.ajax({
+    url: '/bienvenuepentest',
+    type: 'POST'
+});
 $("[name='image']").on('change', function () {
   var file = this.files[0];
 

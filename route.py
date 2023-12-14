@@ -7,6 +7,7 @@ from traduction import Traduction
 from mypic import Pic
 from music import Music
 from javascript import Js
+from stylesheet import Css
 
 
 class Route():
@@ -15,6 +16,7 @@ class Route():
     self.route={
 r"/$":"Hello#hi",
 r"/bienvenue$":"Hello#hi",
+r"/bienvenuepentest$":"Hello#pentest",
 r"/bluetooth$":"Hello#bluetooth",
 r"/reseau$":"Hello#reseau",
 r"/desactiverreseau$":"Hello#desactiverreseau",
@@ -34,13 +36,16 @@ r"/music$":"Music#music",
 r"/traduire$":"Traduction#traduire",
 
 }
-  def get_route(self,myroute,myparams,mydata):
+  def get_route(self,myroute,myparams,mydata = None):
     print(myroute,myparams)
     print("myroute")
 
     self.params=myparams
     if myroute.endswith("ico"):
         myProgram=Pic(myroute)
+        return myProgram
+    elif myroute.endswith(".css"):
+        myProgram=Css(name=myroute)
         return myProgram
     elif myroute.endswith(".js"):
         myProgram=Js(name=myroute)
@@ -56,7 +61,12 @@ r"/traduire$":"Traduction#traduire",
             print(loc["myvar"])
             print("loc")
             if mydata:
-                exec("myvar=mydata(myProgram=myvar)",globals(), loc)
+                loc["mydata"]=mydata
+                exec("mypost=mydata(myProgram=myvar)",globals(), loc)
+                x = isinstance(loc["mypost"], tuple)
+                if not x:
+                   exec("myvar=mypost",globals(), loc)
+
             exec("myvar=myvar.work(params={params})".format(params=myparams),globals(),loc)
             return loc["myvar"]
         mytext=(Erreur().err404())

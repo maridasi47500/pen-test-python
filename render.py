@@ -15,6 +15,9 @@ class Render():
     self.my_params[name]=param
   def set_collection(self,name,collection):
     self.collection[name]=collection
+  def set_json(self,x):
+    self.template=False
+    self.body=x
   def render_collection(self,path,view,mycollection,erreur):
     try:
       myview=open(os.path.abspath(path+"/"+view), "r").read()

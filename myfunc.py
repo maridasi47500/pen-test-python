@@ -4,6 +4,8 @@ from subprocess import check_output as runmyscript
 class Myfunc():
     pic=False
     js=False
+    css=False
+    json=False
     figure=Render("hi") 
     upload=False
     myfile=False
@@ -13,6 +15,10 @@ class Myfunc():
     run=False
     path=False
     runthisprogram=False
+    def render_some_json(self,x):
+        self.json=True
+        self.figure.set_json(x)
+        
     def set_runthisprogram(self,run=False):
         self.runthisprogram=run
     def get_runthisprogram(self):
@@ -50,6 +56,10 @@ class Myfunc():
         return self.figure
     def get_pic(self):
         return self.pic
+    def get_json(self):
+        return self.json
+    def get_css(self):
+        return self.css
     def get_js(self):
         return self.js
     def set_attributes(self,name):

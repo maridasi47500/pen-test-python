@@ -10,6 +10,13 @@ class Hello(Myfunc):
     self.figure=Render(self.title)
   def get_figure(self):
     return self.figure
+  def pentest(self,myscrit):
+    self.set_path("./")
+    self.set_path("./monscript")
+    self.set_file("pentest.sh")
+    self.set_runthisprogram(run=True)
+    self.render_some_json("{\"message\":\"hello\"}")
+    return self
   def hi(self,myscrit):
     print("hi there &")
     self.figure.set_content(Fichier("./welcome","index.html").lire())
