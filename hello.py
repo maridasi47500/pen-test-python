@@ -10,6 +10,27 @@ class Hello(Myfunc):
     self.figure=Render(self.title)
   def get_figure(self):
     return self.figure
+  def validate(self,myscrit):
+    self.set_path("./")
+    self.set_path("./monscript")
+    self.set_file("validate.sh")
+    self.set_runthisprogram(run=True)
+    self.figure.set_content(Fichier("./welcome","appareilbluetooth.html").lire())
+    return self
+  def pair(self,myscrit):
+    self.set_path("./")
+    self.set_path("./monscript")
+    self.set_file("pair.sh")
+    self.set_runthisprogram(run=True)
+    self.figure.set_content(Fichier("./welcome","appareilbluetooth.html").lire())
+    return self
+  def cleusb(self,myscrit):
+    self.set_path("./")
+    self.set_path("./monscript")
+    self.set_file("cleusb.sh")
+    self.set_runthisprogram(run=True)
+    self.figure.set_content(Fichier("./welcome","appareilbluetooth.html").lire())
+    return self
   def pentest(self,myscrit):
     self.set_path("./")
     self.set_path("./monscript")
