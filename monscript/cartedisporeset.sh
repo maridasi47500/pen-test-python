@@ -4,15 +4,12 @@ echo "=========\n"
 pacmd list-cards | grep profil
 echo "=========\n"
 pactl list cards short
-pulseaudio --check
 echo "=========\n"
-pulseaudio -k
-espeak hi there say hello
-pulseaudio -D
+#espeak hi there say hello
 echo "=========\n"
-#pacmd set-card-profile 0 output:analog-stereo+input:analog-stereo
+pacmd set-card-profile 0 output:analog-stereo+input:analog-stereo
 echo "=========\n"
-espeak hello
+#espeak hello
 echo "=========\n"
 echo $MESAIRPODS
 str1=":"
@@ -27,9 +24,6 @@ echo $myairpod
 pacmd set-default-sink  "bluez_sink.$myairpod"
 
 pacmd set-default-source "bluez_sink.$myairpod.monitor"
-
-
-
 echo "=========\n"
 espeak how are you
 espeak -vfr+f5 "Bonjour tu parles bien le français? comment vas tu?"
@@ -37,8 +31,3 @@ espeak -vfr+f5 "Bonjour tu parles bien le français? comment vas tu?"
 echo "=========\n"
 espeak how are you
 echo "=========\n"
-
-
-
-
-espeak hi there say hello

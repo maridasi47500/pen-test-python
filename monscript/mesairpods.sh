@@ -1,1 +1,1 @@
-sudo /etc/init.d/bluetooth restart
+/etc/init.d/bluetooth restart

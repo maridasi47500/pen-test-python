@@ -1,4 +1,4 @@
-source ./venv/bin/activate
+. ./venv/bin/activate
 pacmd list-cards
 echo "=========\n"
 pacmd list-cards | grep profil
@@ -17,18 +17,13 @@ myairpod=""
 myairpod=$(echo $MESAIRPODS | tr ":" "_")
 echo $myairpod
 
-pacmd set-default-sink "bluez_sink.$myairpod"
-pacmd set-default-source "bluez_sink.$myairpod.monitor"
+pacmd set-default-sink bluez_sink.E4_90_FD_23_79_04.a2dp_sink
+#pacmd set-default-card "bluez_card.$myairpod"
+#pacmd set-default-source "bluez_card.$myairpod.monitor"
+pacmd set-default-sink "bluez_sink.$myairpod.a2dp_sink"
+pacmd set-default-source "bluez_sink.$myairpod.a2dp_sink.monitor"
 
 echo "=========\n"
 espeak how are you
 espeak -vfr+f5 "Bonjour tu parles bien le français? comment vas tu?"
 echo "=========\n"
-pulseaudio --check
-#echo "=========\n"
-xterm -l -hold -e "pulseaudio -k && espeak 'hi there say hello' && pulseaudio -D"
-
-
-
-
-espeak hi there say hello
