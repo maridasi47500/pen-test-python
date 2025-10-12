@@ -22,3 +22,4 @@ pip install git+https://github.com/abenassi/Google-Search-API
 ```
 rm ~/.local/lib/python3.5/ -rf
 ```
+![alt text](reso1.png)
